@@ -57,13 +57,12 @@ const tutorialPages = [
   },
 ]
 
-const game = new AstroTetherGame(canvas, ui)
-game.setTutorialPages(tutorialPages)
-
 const appState = {
   mode: 'menu',
   selectedMode: 'tutorial',
 }
+
+let game = null
 
 function showMenu() {
   appState.mode = 'menu'
@@ -233,17 +232,28 @@ ui.lineTypeBounce.addEventListener('click', () => {
   game.setSelectedLineType('bounce')
 })
 
-game.onReturnHome = () => showMenu()
-game.onEnterMenu = () => showMenu()
-game.onEnterInfinite = () => {
-  appState.selectedMode = 'infinite'
-  startInfinite()
-}
-
 ui.backHomeBtn.addEventListener('click', () => showMenu())
 
 ui.hintBtn.textContent = '[提示]'
 
-showMenu()
-game.start()
-window.__astroTether = game
+function bootstrap() {
+  game = new AstroTetherGame(canvas, ui)
+  game.setTutorialPages(tutorialPages)
+
+  game.onReturnHome = () => showMenu()
+  game.onEnterMenu = () => showMenu()
+  game.onEnterInfinite = () => {
+    appState.selectedMode = 'infinite'
+    startInfinite()
+  }
+
+  showMenu()
+  game.start()
+  window.__astroTether = game
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootstrap, { once: true })
+} else {
+  bootstrap()
+}

@@ -206,6 +206,9 @@ var AstroTetherBundle = (() => {
     start() {
       this.resize();
       this.goToLevel(1);
+      requestAnimationFrame(() => {
+        this.syncLayout();
+      });
       const loop = (time) => {
         const dt = this.lastFrameTime ? Math.min(time - this.lastFrameTime, 33.333) : 16.666;
         this.lastFrameTime = time;
@@ -215,10 +218,13 @@ var AstroTetherBundle = (() => {
       };
       requestAnimationFrame(loop);
     }
+    syncLayout() {
+      this.resize();
+      this.goToLevel(this.level, { keepLevel: true });
+    }
     bindEvents() {
       window.addEventListener("resize", () => {
-        this.resize();
-        this.goToLevel(this.level, { keepLevel: true });
+        this.syncLayout();
       });
       this.canvas.addEventListener("mousedown", (event) => this.onPointerDown(event));
       this.canvas.addEventListener("mousemove", (event) => this.onPointerMove(event));
@@ -2068,12 +2074,11 @@ var AstroTetherBundle = (() => {
       accent: "ready"
     }
   ];
-  var game = new AstroTetherGame(canvas, ui);
-  game.setTutorialPages(tutorialPages);
   var appState = {
     mode: "menu",
     selectedMode: "tutorial"
   };
+  var game = null;
   function showMenu() {
     appState.mode = "menu";
     ui.menu.classList.add("is-visible");
@@ -2226,15 +2231,24 @@ var AstroTetherBundle = (() => {
   ui.lineTypeBounce.addEventListener("click", () => {
     game.setSelectedLineType("bounce");
   });
-  game.onReturnHome = () => showMenu();
-  game.onEnterMenu = () => showMenu();
-  game.onEnterInfinite = () => {
-    appState.selectedMode = "infinite";
-    startInfinite();
-  };
   ui.backHomeBtn.addEventListener("click", () => showMenu());
   ui.hintBtn.textContent = "[\u63D0\u793A]";
-  showMenu();
-  game.start();
-  window.__astroTether = game;
+  function bootstrap() {
+    game = new AstroTetherGame(canvas, ui);
+    game.setTutorialPages(tutorialPages);
+    game.onReturnHome = () => showMenu();
+    game.onEnterMenu = () => showMenu();
+    game.onEnterInfinite = () => {
+      appState.selectedMode = "infinite";
+      startInfinite();
+    };
+    showMenu();
+    game.start();
+    window.__astroTether = game;
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootstrap, { once: true });
+  } else {
+    bootstrap();
+  }
 })();

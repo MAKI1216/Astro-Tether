@@ -154,6 +154,9 @@ export class AstroTetherGame {
   start() {
     this.resize()
     this.goToLevel(1)
+    requestAnimationFrame(() => {
+      this.syncLayout()
+    })
 
     const loop = (time) => {
       const dt = this.lastFrameTime ? Math.min(time - this.lastFrameTime, 33.333) : 16.666
@@ -168,10 +171,14 @@ export class AstroTetherGame {
     requestAnimationFrame(loop)
   }
 
+  syncLayout() {
+    this.resize()
+    this.goToLevel(this.level, { keepLevel: true })
+  }
+
   bindEvents() {
     window.addEventListener('resize', () => {
-      this.resize()
-      this.goToLevel(this.level, { keepLevel: true })
+      this.syncLayout()
     })
 
     this.canvas.addEventListener('mousedown', (event) => this.onPointerDown(event))
