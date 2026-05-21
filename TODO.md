@@ -1,0 +1,33 @@
+# Astro-Tether TODO
+
+- [x] Initialize Vite project shell
+- [x] Configure GitHub Pages base path in Vite
+- [x] Scaffold static HTML/CSS layout for full-screen canvas and HUD
+- [x] Add Matter.js engine with zero global gravity
+- [x] Build custom Canvas render loop with neon/glow styling
+- [x] Implement probe, start portal, and wormhole entities
+- [x] Implement gravity planets with dashed influence radius
+- [x] Implement speed ring pulse triggers
+- [x] Implement asteroid hazards and failure handling
+- [x] Implement probe trail history rendering
+- [x] Implement player drawing with downsampling and energy consumption
+- [x] Create static line segment bodies for player-drawn walls
+- [x] Implement launch, clear, hint, and retry controls
+- [x] Implement Level 1 tutorial scene
+- [x] Implement procedural always-solvable level generation
+- [x] Implement hidden golden path hint rendering
+- [x] Implement win burst particles and auto-next-level flow
+- [x] Implement out-of-bounds reset and collision-based failure
+- [x] Validate build output and GitHub Pages compatibility
+- [x] Fix HUD layout so legend, level, and energy stay at the top without overlapping gameplay
+- [x] Refine line collision response to bounce on head-on impact and slide on shallow contact
+- [x] Rebuild the direct-open index.html after UI and physics fixes
+- [x] Remove Matter.js default line-body collision response and drive wall contact via custom proximity physics
+- [x] Add selectable line types with 1/2 keyboard switching, separate energy costs, and legend UI
+- [x] Remove probe drag so flight speed no longer decays over time
+- [x] Strengthen planetary gravity visuals and enforce gravity only inside the dashed influence radius
+- [x] Rebuild the direct-open index.html after the line-type and gravity updates
+- [x] Rework the start page into a menu with tutorial and infinite mode entry points
+- [x] Add paged tutorial modal that locks gameplay until closed
+- [x] Add infinite-mode level refresh, return-home, and next-level flow
+- [x] Expand the homepage and UI styling with more cinematic cosmic presentation
