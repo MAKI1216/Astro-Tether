@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/Astro-Tether/',
+  base: './',
+  server: {
+    host: '0.0.0.0',
+  },
 })
 
